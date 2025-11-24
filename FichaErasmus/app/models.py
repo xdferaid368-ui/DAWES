@@ -1,0 +1,28 @@
+from django.db import models
+
+class Alumno(models.Model):
+    # Identidad / Personalien
+    apellidos = models.TextField()
+    nombre = models.TextField()
+    clase = models.TextField()
+    sexo = models.TextField()
+    fecha_nacimiento = models.DateField(null=True, blank=False)
+    numero_pasaporte = models.IntegerField()
+    direccion = models.TextField()
+    numero_telefono = models.IntegerField()
+    numero_movil = models.IntegerField()
+    email_alumno = models.TextField(default='emailalum@email.com')
+    email_padres = models.TextField(default='emailpadre@email.com')
+    profesion_padre = models.TextField()
+    profesion_madre = models.TextField()
+    edad_hermanos = models.IntegerField(null=True, blank=True)
+    edad_hermanas = models.IntegerField(null=True, blank=True)
+    mascotas_tener = models.BooleanField(default=False)
+    tipo_mascota = models.TextField(blank=True)
+    problemas_salud = models.TextField(blank=True)
+    es_vegetariano = models.BooleanField(default=False)
+    pref_intercambio = models.TextField(blank=True)  
+    puede_alojar = models.BooleanField(default=False)
+    larga_duracion = models.BooleanField(default=False)
+    firma_alumno = models.TextField(blank=True)
+    firma_padres = models.TextField(blank=True)
