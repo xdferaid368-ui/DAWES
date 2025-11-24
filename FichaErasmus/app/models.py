@@ -1,7 +1,6 @@
 from django.db import models
 
 class Alumno(models.Model):
-    # Identidad / Personalien
     apellidos = models.TextField()
     nombre = models.TextField()
     clase = models.TextField()
@@ -21,8 +20,8 @@ class Alumno(models.Model):
     tipo_mascota = models.TextField(blank=True)
     problemas_salud = models.TextField(blank=True)
     es_vegetariano = models.BooleanField(default=False)
-    pref_intercambio = models.TextField(blank=True)  
+    pref_intercambio = models.TextField(blank=True, null=True)  
     puede_alojar = models.BooleanField(default=False)
     larga_duracion = models.BooleanField(default=False)
-    firma_alumno = models.TextField(blank=True)
-    firma_padres = models.TextField(blank=True)
+    firma_alumno = models.TextField(blank=True, null=True)
+    firma_padres = models.TextField(blank=True, null=True)
