@@ -1,0 +1,16 @@
+{% extends "app/base.html" %}
+
+{% block title %}Listado de Alumnos{% endblock %}
+
+{% block content %}
+<h2>Listado de alumnos</h2>
+
+<ul>
+    {% for alumno in alumnos %}
+        <li>{{ alumno.nombre }} {{ alumno.apellidos }}</li>
+    {% empty %}
+        <li>No hay alumnos registrados</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
