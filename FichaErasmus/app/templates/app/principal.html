@@ -7,9 +7,9 @@
 
 <ul>
     {% for alumno in alumnos %}
-        <li>{{ alumno.nombre }} {{ alumno.apellidos }}</li>
-    {% empty %}
-        <li>No hay alumnos registrados</li>
+        <li>
+            <a href="{%url 'detalle_alumno' alumno.id%}">{{alumno.nombre}} {{alumno.apellidos}}</a>
+        </li>
     {% endfor %}
 </ul>
 

@@ -1,0 +1,104 @@
+{% extends "app/base.html" %}
+
+{% block title %}Detalle del Alumno{% endblock %}
+
+{% block content %}
+<h2>Detalle del Alumno</h2>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Nombre completo</th>
+        <td>{{ alumno.nombre }} {{ alumno.apellidos }}</td>
+    </tr>
+    <tr>
+        <th>Clase</th>
+        <td>{{ alumno.clase }}</td>
+    </tr>
+    <tr>
+        <th>Sexo</th>
+        <td>{{ alumno.sexo }}</td>
+    </tr>
+    <tr>
+        <th>Fecha de nacimiento</th>
+        <td>{{ alumno.fecha_nacimiento }}</td>
+    </tr>
+    <tr>
+        <th>Número de pasaporte</th>
+        <td>{{ alumno.numero_pasaporte }}</td>
+    </tr>
+    <tr>
+        <th>Dirección</th>
+        <td>{{ alumno.direccion }}</td>
+    </tr>
+    <tr>
+        <th>Teléfono</th>
+        <td>{{ alumno.numero_telefono }}</td>
+    </tr>
+    <tr>
+        <th>Móvil</th>
+        <td>{{ alumno.numero_movil }}</td>
+    </tr>
+    <tr>
+        <th>Email alumno</th>
+        <td>{{ alumno.email_alumno }}</td>
+    </tr>
+    <tr>
+        <th>Email padres</th>
+        <td>{{ alumno.email_padres }}</td>
+    </tr>
+    <tr>
+        <th>Profesión del padre</th>
+        <td>{{ alumno.profesion_padre }}</td>
+    </tr>
+    <tr>
+        <th>Profesión de la madre</th>
+        <td>{{ alumno.profesion_madre }}</td>
+    </tr>
+    <tr>
+        <th>Edad hermanos</th>
+        <td>{{ alumno.edad_hermanos }}</td>
+    </tr>
+    <tr>
+        <th>Edad hermanas</th>
+        <td>{{ alumno.edad_hermanas }}</td>
+    </tr>
+    <tr>
+        <th>Tiene mascotas</th>
+        <td>{{ alumno.mascotas_tener|yesno:"Sí,No" }}</td>
+    </tr>
+    <tr>
+        <th>Tipo de mascota</th>
+        <td>{{ alumno.tipo_mascota }}</td>
+    </tr>
+    <tr>
+        <th>Problemas de salud</th>
+        <td>{{ alumno.problemas_salud }}</td>
+    </tr>
+    <tr>
+        <th>Vegetariano</th>
+        <td>{{ alumno.es_vegetariano|yesno:"Sí,No" }}</td>
+    </tr>
+    <tr>
+        <th>Preferencia de intercambio</th>
+        <td>{{ alumno.pref_intercambio }}</td>
+    </tr>
+    <tr>
+        <th>Puede alojar</th>
+        <td>{{ alumno.puede_alojar|yesno:"Sí,No" }}</td>
+    </tr>
+    <tr>
+        <th>Larga duración</th>
+        <td>{{ alumno.larga_duracion|yesno:"Sí,No" }}</td>
+    </tr>
+    <tr>
+        <th>Firma alumno</th>
+        <td>{{ alumno.firma_alumno }}</td>
+    </tr>
+    <tr>
+        <th>Firma padres</th>
+        <td>{{ alumno.firma_padres }}</td>
+    </tr>
+</table>
+
+<a href="{% url 'principal' %}">Volver al listado</a>
+{% endblock %}
