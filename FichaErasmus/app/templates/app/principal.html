@@ -9,9 +9,11 @@
     {% for alumno in alumnos %}
         <li>
             <a href="{%url 'detalle_alumno' alumno.id%}">{{alumno.nombre}} {{alumno.apellidos}}</a>
+            <a href="{% url 'editar_ficha' alumno.pk %}">Editar</a>
+            <a href="{% url 'eliminar_ficha' alumno.pk %}">Eliminar</a>
         </li>
     {% endfor %}
 </ul>
 <a href="{% url 'crear_ficha' %}">Crear nueva ficha</a>
 
-{% endblock %}
+{% endblock %}.

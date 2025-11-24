@@ -1,0 +1,12 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<h1>Editar ficha de {{ alumno.nombre }} {{ alumno.apellidos }}</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar cambios</button>
+    <a href="{% url 'principal' %}">Cancelar</a>
+</form>
+{% endblock %}
