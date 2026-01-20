@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import *
+
 # Create your models here.
 class Marca(models.Model):
     nombre = models.CharField(max_length=100, blank = False, null=True )
@@ -15,11 +15,13 @@ class Producto(models.Model):
     marca = models.ForeignKey("Marca",on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.nombre} ({self.modelo})"
-    
-class User(AbstractUser):
+
+class User(models.Model):
     saldo = models.DecimalField(max_digits=10, decimal_places=2)
-    vip = models.BooleanField(default=False)
-    
+    vip = models.BooleanField(default= False)
+    def __str__(self):  
+        return f'Cliente Nº{self.pk}'
+
 class Compra(models.Model):
     class Iva(models.TextChoices):
         Iva_4 = '4%'
@@ -42,7 +44,5 @@ class Promocion(models.Model):
     fecha_fin = models.DateField()
     def __str__(self):
         return self.nombre
-
-
 
 
