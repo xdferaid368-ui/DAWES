@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import *
 from .models import *
 from django.urls import reverse_lazy
@@ -42,3 +42,32 @@ def listado_productos_compra(request):
         productos = [p for p in productos if marca in p.marca.nombre.lower()]
     
     return render(request, 'tienda/tienda.html', {'productos': productos})
+
+def checkout(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)
+    form = CompraForm()
+    return render(request, 'tienda/checkout.html', {'producto': producto, 'form': form})
+
+
+def checkout(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)
+    if request.method == 'POST':
+        form = CompraForm(request.POST)
+        if form.is_valid():
+            unidades = form.cleaned_data['unidades']
+            if unidades > producto.unidades:
+                form.add_error('unidades', 'No hay suficientes unidades disponibles.')
+            else:
+                importe = unidades * producto.precio
+                Compra.objects.create(
+                    usuario=request.user,
+                    producto=producto,
+                    unidades=unidades,
+                    importe=importe, 
+                )
+                producto.unidades -= unidades
+                producto.save()
+                return redirect('tienda') 
+    else:
+        form = CompraForm()
+    return render(request, 'tienda/checkout.html', {'producto': producto, 'form': form})

@@ -11,6 +11,7 @@
 {% for producto in productos %}
     <li>
         {{ producto.nombre }} ({{ producto.modelo }}) <br> {{ producto.unidades }} unidades - {{ producto.precio }} 
+        <a href="{% url 'checkout' producto.pk %}">Ver detalle</a>
     </li>
 </ul>
 {% endfor %}

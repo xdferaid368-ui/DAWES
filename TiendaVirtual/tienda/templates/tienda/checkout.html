@@ -1,0 +1,12 @@
+<h1>Detalle del producto</h1>
+
+<p>Nombre: {{ producto.nombre }}</p>
+<p>Modelo: {{ producto.modelo }}</p>
+<p>Precio unitario: {{ producto.precio }} €</p>
+<p>Unidades disponibles: {{ producto.unidades }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Confirmar</button>
+</form> 
