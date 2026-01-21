@@ -1,0 +1,16 @@
+<h1>Productos disponibles</h1>
+
+<form method="get">
+    Buscar: <input type="text" name="buscar" value="{{ request.GET.search }}">
+    Marca: <input type="text" name="marca" value="{{ request.GET.marca }}">
+    VIP: <input type="checkbox" name="vip" value="1" {% if request.GET.vip %}checked{% endif %}>
+    <button type="submit">Filtrar</button>
+</form>
+
+<ul>
+{% for producto in productos %}
+    <li>
+        {{ producto.nombre }} ({{ producto.modelo }}) <br> {{ producto.unidades }} unidades - {{ producto.precio }} 
+    </li>
+</ul>
+{% endfor %}
