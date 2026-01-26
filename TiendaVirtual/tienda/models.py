@@ -10,7 +10,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=100, blank = False, null=True )
     modelo = models.CharField(max_length=100, blank = False, null=True )
     unidades = models.IntegerField( blank = False)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     vip = models.BooleanField(default= False)
     marca = models.ForeignKey("Marca",on_delete=models.CASCADE)
     def __str__(self):

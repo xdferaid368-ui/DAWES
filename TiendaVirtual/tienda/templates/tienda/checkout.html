@@ -1,12 +1,22 @@
+{% extends 'tienda/base.html'%}
+
+{% block title %}Detalle del producto{% endblock %}
+
+{% block content %}
+
 <h1>Detalle del producto</h1>
 
-<p>Nombre: {{ producto.nombre }}</p>
-<p>Modelo: {{ producto.modelo }}</p>
-<p>Precio unitario: {{ producto.precio }} €</p>
-<p>Unidades disponibles: {{ producto.unidades }}</p>
+<ul class="list-group mb-3">
+    <li class="list-group-item"><strong>Nombre:</strong> {{ producto.nombre }}</li>
+    <li class="list-group-item"><strong>Modelo:</strong> {{ producto.modelo }}</li>
+    <li class="list-group-item"><strong>Precio:</strong> {{ producto.precio }} €</li>
+    <li class="list-group-item"><strong>Unidades disponibles:</strong> {{ producto.unidades }}</li>
+</ul>
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Confirmar</button>
-</form> 
+    <button class="btn btn-success" type="submit">Confirmar</button>
+</form>
+
+{% endblock %}

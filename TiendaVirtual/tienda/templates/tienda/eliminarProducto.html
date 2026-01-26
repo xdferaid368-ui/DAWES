@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Eliminar Producto</title>
-</head>
-<body>
+{% extends 'tienda/base.html' %}
 
-    <h1>Eliminar Producto</h1>
 
-    <p>¿Seguro que quieres eliminar el producto "{{ object.nombre }}"?</p>
+{% block title %}Eliminar producto{% endblock %}
 
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Confirmar</button>
-        <a href="{% url 'listadoProductos' %}">Cancelar</a>
-    </form>
+{% block content %}
 
-</body>
-</html>
+<h1>Eliminar producto</h1>
+
+<p>¿Seguro que quieres eliminar <strong>{{ object.nombre }}</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Confirmar</button>
+    <a class="btn btn-secondary" href="{% url 'listadoProductos' %}">Cancelar</a>
+</form>
+
+{% endblock %}
