@@ -27,7 +27,7 @@ class Compra(models.Model):
         Iva_4 = '4%'
         Iva_10 = '10%'
         Iva_21 = '21%'
-    usuario = models.ForeignKey('Usuario', on_delete=models.CASCADE)
+    usuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='compras')
     producto = models.ForeignKey('Producto', on_delete=models.CASCADE)
     fecha =  models.DateField(auto_now_add=True)
     unidades = models.IntegerField( blank = False)

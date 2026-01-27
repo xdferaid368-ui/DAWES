@@ -1,0 +1,54 @@
+{% extends 'tienda/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Perfil de {{ request.user.username }}</h1>
+    <p>Email: {{ request.user.email }}</p>
+    <hr>
+
+    <h2>Mis compras</h2>
+
+    {% if compras %}
+        <table border="1" cellpadding="10" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Modelo</th>
+                    <th>Unidades</th>
+                    <th>Precio unitario</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                    <tr>
+                        <td>{{ compra.producto.nombre }}</td>
+                        <td>{{ compra.producto.modelo }}</td>
+                        <td>{{ compra.unidades }}</td>
+                        <td>{{ compra.producto.precio }} €</td>
+                        <td>{{ compra.importe }} €</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+<h3>
+    Total gastado: {{ total_gastado }} €
+</h3>
+
+    {% else %}
+        <p>No has realizado ninguna compra todavía.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
