@@ -31,7 +31,7 @@ class Compra(models.Model):
     producto = models.ForeignKey('Producto', on_delete=models.CASCADE)
     fecha =  models.DateField(auto_now_add=True)
     unidades = models.IntegerField( blank = False)
-    importe = models.DecimalField(max_digits=10, decimal_places=2)
+    importe = models.DecimalField(max_digits=10, decimal_places=2,)
     iva = models.CharField(max_length= 3, choices=Iva.choices, default='')
     def __str__(self):
         return f'{self.usuario} {self.fecha}'

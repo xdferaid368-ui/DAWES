@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from .forms import * 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Sum
+from django.db.models import Sum, Count, Max, Min, Avg
 # Create your views here.
 
 class Inicio(TemplateView):
@@ -58,17 +58,25 @@ def checkout(request, producto_id):
         if form.is_valid():
             unidades = form.cleaned_data['unidades']
             if unidades > producto.unidades:
-                form.add_error('unidades', 'No hay suficientes unidades disponibles.')
+                messages.error(request, 'No hay Stock')
             else:
-                importe = unidades * producto.precio
-                Compra.objects.create(
-                    usuario=request.user,
-                    producto=producto,
-                    unidades=unidades,
-                    importe=importe, 
-                )
-                producto.unidades -= unidades
-                producto.save()
+                total = unidades * producto.precio
+                if request.user.saldo <= total :
+                    messages.error(request, 'No hay saldo suficiente')
+                else:
+                    importe = unidades * producto.precio
+                    Compra.objects.create(
+                        usuario=request.user,
+                        producto=producto,
+                        unidades=unidades,
+                        importe=importe, 
+                    )
+                    producto.unidades -= unidades
+                    producto.save()
+                    request.user.saldo -= total
+                    request.user.save()
+                    messages.success(request, 'Compra Realizada')
+                    
                 return redirect('tienda') 
     else:
         form = CompraForm()
@@ -137,5 +145,8 @@ class PerfilView(LoginRequiredMixin, TemplateView):
         return context
 
 def informes(request):
-    topclientes = Usuario.objects.annotate(total_gastado = Sum("compra_importe")).order_by('total_gastado')
-  
+    topclientes = Usuario.objects.annotate(total_gastado = Sum("compras__importe")).order_by('total_gastado')[:10]
+    top_compras = Usuario.objects.annotate(total_compras=Count("compras")).order_by('-total_compras')[:10]
+    estadistica_compra = Compra.objects.aggregate(total_compras = Count('id'), total_importe = Sum('importe'), maximo_importe = Max('importe'), min_importe = Min('importe'), media_importe = Avg('importe')) 
+    contexto = {'topclientes': topclientes , 'top_compras': top_compras, 'estadistica_compra':estadistica_compra}
+    return render(request, 'tienda/informes.html', contexto)

@@ -1,0 +1,39 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+
+<h1>Informes</h1>
+<h2>Estadisticas Generales</h2>
+<p>Numero Total de Compras: {{estadistica_compra.total_compras}} </p>
+
+<p>Importe Total de Compras: {{estadistica_compra.total_importe}}€</p>
+
+<p>Importe Maximo de Compras: {{estadistica_compra.maximo_importe}}€ </p>
+
+<p>Importe Minimo de Compras: {{estadistica_compra.min_importe}}€ </p>
+
+<p>Importe Medio de Compras: {{estadistica_compra.media_importe}}€ </p>
+
+<ul>
+    {% for c in clientes %}
+    <li>{{c}}</li>
+    {% endfor %}
+</ul>
+
+<h2>TOp clientes</h2>
+{% for topcliente in topclientes %}
+<li>
+    {{topcliente}}
+</li>
+{% endfor %}
+<h2>TOp ccompras</h2>
+<ul>
+    
+</ul>
+
+<table>
+    <th>Nombre Usuario</th>
+    
+</table>
+
+{% endblock %}
