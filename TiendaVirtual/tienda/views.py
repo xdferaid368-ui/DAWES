@@ -6,6 +6,7 @@ from .forms import *
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, Count, Max, Min, Avg
+from datetime import *
 # Create your views here.
 
 class Inicio(TemplateView):
@@ -48,15 +49,28 @@ def listado_productos_compra(request):
 
 def checkout(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
-    form = CompraForm()
+    form = CheckoutForm()
     return render(request, 'tienda/checkout.html', {'producto': producto, 'form': form})
 
 def checkout(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
     if request.method == 'POST':
-        form = CompraForm(request.POST)
+        form = CheckoutForm(request.POST)
         if form.is_valid():
             unidades = form.cleaned_data['unidades']
+            codigo = form.cleaned_data['codigo']
+            
+            if codigo:
+                try:
+                    promocion = Promocion.objects.get(codigo=codigo).filter(fecha_inicio__lte = datetime.now() , fecha_fin__gte = datetime.now(), codigo = codigo )
+                except Promocion.DoesNotExist:
+                    messages.error(request, 'Promocion no valida')
+                    return render(request, 'app/checkout.html', {'producto':producto, 'form':form})
+    
+                if promocion.fecha_inicio < datetime.today() or promocion.fecha_fin > datetime.today():
+                    messages.error(request, 'Promocion Fuera de Fecha')
+                    return render(request, 'app/checkout.html', {'producto':producto, 'form':form})
+                    
             if unidades > producto.unidades:
                 messages.error(request, 'No hay Stock')
             else:
@@ -75,11 +89,10 @@ def checkout(request, producto_id):
                     producto.save()
                     request.user.saldo -= total
                     request.user.save()
-                    messages.success(request, 'Compra Realizada')
-                    
+                    messages.success(request, 'Compra Realizada')           
                 return redirect('tienda') 
     else:
-        form = CompraForm()
+        form = CheckoutForm()
     return render(request, 'tienda/checkout.html', {'producto': producto, 'form': form})
 
 
@@ -149,4 +162,4 @@ def informes(request):
     top_compras = Usuario.objects.annotate(total_compras=Count("compras")).order_by('-total_compras')[:10]
     estadistica_compra = Compra.objects.aggregate(total_compras = Count('id'), total_importe = Sum('importe'), maximo_importe = Max('importe'), min_importe = Min('importe'), media_importe = Avg('importe')) 
     contexto = {'topclientes': topclientes , 'top_compras': top_compras, 'estadistica_compra':estadistica_compra}
-    return render(request, 'tienda/informes.html', contexto)
+    return render(request, 'tienda/informes.html', contexto)    

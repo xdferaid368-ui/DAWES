@@ -6,10 +6,7 @@ class ProductoEditarForm(forms.ModelForm):
         model = Producto
         fields = ['nombre','modelo','unidades','precio','vip','marca' ]
 
-class CompraForm(forms.ModelForm):
-    class Meta:
-        model = Compra
-        fields = ['unidades']
-        widgets = {
-            'unidades a comprar': forms.NumberInput(attrs={'min': 1}),  
-        }
+class CheckoutForm(forms.Form):
+    unidades = forms.IntegerField(min_value=1, label= 'unidades')
+    promocion = forms.IntegerField(required = False )
+    
